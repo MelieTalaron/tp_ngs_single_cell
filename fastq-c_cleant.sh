@@ -1,21 +1,24 @@
 #!/bin/bash
 
-# Creates target files
+#
+#The script allows to assess the quality of the 10 first srr downloaded and cleant
+#
+
+# Create target files
 data="/ifb/data/mydatalocal/data/"
 mkdir -p $data
 cd $data
 mkdir -p fastqc_cleant
 
-
-#Works in file sra_data
+#Work in file sra_data
 cd /ifb/data/mydatalocal/data/trimmo_cleared
 
-#Takes the 10th first cells data
+#Take the 10th first cells data
 SRR=`ls /ifb/data/mydatalocal/data/trimmo_cleared|head -10`
   
-#Fastq-c results in target file
+#Produce Fastq-c results in the target file for each srr of clean data
 for srr in $SRR
 do
-echo $srr
+echo $srr #Display srr currently processed
 fastqc $srr -o /ifb/data/mydatalocal/data/fastqc_cleant
 done
