@@ -1,7 +1,7 @@
 TP NGS Single Cell
 =================
 
-The goal is to perform the bioinformatics analysis of the single-cell RNA sequencing obtained from the molar of the mouse.  
+The goal is to perform the bioinformatics analysis of the single-cell RNA sequencing obtained from the incisor of the mouse.  
 This includes: Download the sequences (srr) of the SRA, clean them, align them with the reference genome of Mus Musculus, and perform the quantitative analysis of the reads.   
 *Elements of our analysis are noted in italic*  
 
