@@ -11,6 +11,7 @@ cd sra_data
   #Takes the 10th first cells data
 # head -10 /ifb/data/mydatalocal/data/SRR_Acc_List.txt > SRR_partial.txt 
 
+
   #Display all SRR (make a list of SRR accession)
 SRR=`cat /ifb/data/mydatalocal/data/SRR_Acc_List.txt`
 
