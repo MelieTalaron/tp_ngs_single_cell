@@ -11,7 +11,7 @@ mkdir -p fastqc_sorting
 cd /ifb/data/mydatalocal/data/sra_data
 
 #Takes the 10th first cells data
-#SRR=`ls /ifb/data/mydatalocal/data/sra_data|head -10`
+SRR=`ls /ifb/data/mydatalocal/data/sra_data|head -10`
   
 #Fastq-c results in target file
 for srr in $SRR
