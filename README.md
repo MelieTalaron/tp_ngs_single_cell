@@ -26,8 +26,8 @@ To appreciate the quality of the downloaded sequences, run [fastq-c_sorting.sh](
 This will:
 1. Create a new folder **"data"** (if not pre-existing)
 2. Create a subfolder **"fastqc_sorting"** (if not pre-existing)
-3. Generate a FAST-qc report and *.zip* for each run of the raw sequence data from **"sra_data"** in **"fastqc_sorting"** 
-   /!\ The current script performs only on the 10 first 
+3. Generate a FAST-qc report and *.zip* for each run of the raw sequence data from **"sra_data"** in **"fastqc_sorting"**    
+   /!\ The current script performs only on the 10 firsts 
 
 >*The quality evaluation was performed on a sample of 10 first SRR*
 
