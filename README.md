@@ -2,7 +2,8 @@ TP NGS Single Cell
 =================
 
 The goal is to perform the bioinformatics analysis of the single-cell RNA sequencing obtained from the molar of the mouse.  
-This includes: Download the sequences (srr) of the SRA, clean them, align them with the reference genome of Mus Musculus, and perform the quantitative analysis of the reads. *Elements of our analysis are noted in italic*  
+This includes: Download the sequences (srr) of the SRA, clean them, align them with the reference genome of Mus Musculus, and perform the quantitative analysis of the reads.   
+*Elements of our analysis are noted in italic*  
 
 >To run the scripts, the Accession List of the selected data from [Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA609340&f=organism_s%3An%3Amus%2520musculus%3Bphenotype_sam_ss%3An%3Ahealthy%3Bplatform_sam_s%3An%3Asmart-seq2%3Bsource_name_sam_ss%3An%3Aincisor%3Ac&o=acc_s%3Aa) must have been downloaded as a *.txt* file.  
 *A total of 2555 cells have been selected with the following filters: Mus musculus specie, healthy, Smart-Seq, incisor*
@@ -16,7 +17,7 @@ This will:
 2. Create a subfolder **"sra_data"** (if not pre-existing)
 3. Dump the FAST-q data for each run of the Accession List in **"sra_data"**  
 
->*2555 SRR were downloaded*
+>*2555 SRR were downloaded with ``fastq-dump`` v.2.10.0*
 
 ## Assess the quality of the data
 
@@ -27,9 +28,9 @@ This will:
 1. Create a new folder **"data"** (if not pre-existing)
 2. Create a subfolder **"fastqc_sorting"** (if not pre-existing)
 3. Generate a FAST-qc report and *.zip* for each run of the raw sequence data from **"sra_data"** in **"fastqc_sorting"**    
-   /!\ The current script performs only on the 10 firsts 
+   /!\ The current script performs only on the 10 first srr
 
->*The quality evaluation was performed on a sample of 10 first SRR*
+>*The quality evaluation was performed with ``fastq-dump`` v.0.11.8 on a sample of 10 first SRR*
 
 ## Clean the data
 
@@ -41,7 +42,7 @@ This will:
 2. Create a subfolder **"trimmo_cleared"** (if not pre-existing)
 3. Generate a *.zip* file in **"trimmo_cleared"**, for each run of the downloaded data with basic cleaning of trimmomatic command for single-end srr
 
->*The data sample was reduced to 2553 after cleanance.   
+>*The data sample was reduced to 2553 after cleanance with Trimmomatic v.0.39   
 A second quality assessment was performed on the 10 first clean SRR to provide further verification*
 
 ## Alignment of the sequences
@@ -62,3 +63,5 @@ This will :
 1. Create a new folder **"data"** (if not pre-existing)
 2. Create a subfolder **"alignments"** (if not pre-existing)
 3. Align the cleant data of each srr from **"trimmo_cleared"** in **"alignments"**
+
+>*salmon v0.14.1*
