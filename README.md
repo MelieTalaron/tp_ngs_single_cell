@@ -2,7 +2,7 @@ TP NGS Single Cell
 =================
 
 The goal is to perform the bioinformatics analysis of the single-cell RNA sequencing obtained from the molar of the mouse.  
-This includes: Downloading the sequences (srr) of the SRA, clean them, align them with the reference genome of Mus Musculus, and perform the quantitative analysis of the reads. *Elements of our analysis are noted in italic*  
+This includes: Download the sequences (srr) of the SRA, clean them, align them with the reference genome of Mus Musculus, and perform the quantitative analysis of the reads. *Elements of our analysis are noted in italic*  
 
 >To run the scripts, the Accession List of the selected data from [Run Selector](https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA609340&f=organism_s%3An%3Amus%2520musculus%3Bphenotype_sam_ss%3An%3Ahealthy%3Bplatform_sam_s%3An%3Asmart-seq2%3Bsource_name_sam_ss%3An%3Aincisor%3Ac&o=acc_s%3Aa) must have been downloaded as a *.txt* file.  
 *A total of 2555 cells have been selected with the following filters: Mus musculus specie, healthy, Smart-Seq, incisor*
