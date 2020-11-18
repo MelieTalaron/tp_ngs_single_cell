@@ -11,7 +11,7 @@ This includes: Download the sequences (srr) of the SRA, clean them, align them w
 
 ## Download the data from the Accession List 
 
-To download the runs of all the SRA selection, run [fast-q_dump.sh](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/fastq-dump.sh)  
+To download the runs of all the SRA selection, run [fastq-dump.sh](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/fastq-dump.sh)  
 This will:
 1. Create a new folder **"data"** (if not pre-existing)
 2. Create a subfolder **"sra_data"** (if not pre-existing)
@@ -30,7 +30,7 @@ This will:
 3. Generate a FAST-qc report and *.zip* for each run of the raw sequence data from **"sra_data"** in **"fastqc_sorting"**    
    /!\ The current script performs only on the 10 first srr
 
->*The quality evaluation was performed with ``fastq-dump`` v.0.11.8 on a sample of 10 first SRR*
+>*The quality evaluation was performed with ``fastqc`` v.0.11.8 on a sample of 10 first SRR*
 
 ## Clean the data
 
