@@ -54,7 +54,7 @@ txi3 <- tximport(files[1001:1500],type="salmon",tx2gene=tx2gene,ignoreTxVersion=
 txi4 <- tximport(files[1501:2000],type="salmon",tx2gene=tx2gene,ignoreTxVersion=T)
 txi5 <- tximport(files[2001:2553],type="salmon",tx2gene=tx2gene,ignoreTxVersion=T)
 
-#Pull the splitted results in one single variable, and hide useless data
+#Pull the splitted results in one single variable
 txi <- txi1
 txi$"abundance" <- cbind(txi1$"abundance",txi2$"abundance",txi3$"abundance",txi4$"abundance",txi5$"abundance")
 txi$"counts" <- cbind(txi1$"counts",txi2$"counts",txi3$"counts",txi4$"counts",txi5$"counts")
