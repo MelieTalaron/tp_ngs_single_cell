@@ -7,8 +7,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#Install biomart if necessary
+#Import transcript-level abundance and generate the matrix of counts at gene level
 ```{r tximport eval=F echo=T}
+#Install biomart if necessary
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
 #BiocManager::install("biomaRt")
