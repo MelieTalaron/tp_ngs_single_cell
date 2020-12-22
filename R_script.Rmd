@@ -7,12 +7,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
+#Install biomart if necessary
 ```{r tximport eval=F echo=T}
 #if (!requireNamespace("BiocManager", quietly = TRUE))
 #   install.packages("BiocManager")
@@ -66,7 +61,7 @@ saveRDS(txi, "txi.rds")
 ```
 
 
-
+#Install required librairies and create Seurat object
 ```{r create_seurat, echo=T}
 library("Seurat")
 setwd("/ifb/data/mydatalocal/tp_ngs_single_cell")
@@ -74,18 +69,17 @@ setwd("/ifb/data/mydatalocal/tp_ngs_single_cell")
 txidata <-readRDS("txi.rds")
 #Create the seurat object that will contain the data and the analysis
 incisor <- CreateSeuratObject(counts = txidata$counts, project = "incisor", min.cells = 3, min.features = 200)
-
 ```
 
-#Violin plot of genes
+#Violin plot of cells' features (raw data)
 ```{r Vilolin_plots, echo=T}
 #add a column to the matrix that will include the % of mitDNA
 incisor[["percent.mt"]] <- PercentageFeatureSet(incisor, pattern = "^mt-")
-#plot the number of RNA counts, and the number of different RNA for each cell (?)
+#plot the number of RNA counts, the percentage of mitochondrial gene present in cells and the number of unique genes for each cell
 plot_RNA <-VlnPlot(incisor, features = c("percent.mt", "nFeature_RNA", "nCount_RNA"), ncol = 3)
 ```
 
-#Plot of features
+#Plot of one feature against another
 ```{r Feature_plots, echo=T}
 plot1 <- FeatureScatter(incisor, feature1 = "nCount_RNA", feature2 = "percent.mt")
 plot_ncount_against_nfeatures <- FeatureScatter(incisor, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
@@ -93,11 +87,16 @@ plot1 + plot_ncount_against_nfeatures
 ```
 
 #Subselection of the data
+# We select cells with: <15% mitochondrial genes, <1 million RNAs and between the 5th and 95th centile of unique genes in cells  
 ```{r subset, echo=T}
-incisor <- subset(incisor, subset = nFeature_RNA > 200 & nFeature_RNA < 10000 & percent.mt < 15 & nCount_RNA < 1000000)
+#Calculate the quantile
+quantile5_incisor <- quantile(incisor$nFeature_RNA, probs = c(0.05), na.rm = FALSE, names = TRUE, type = 7)
+#Make the sub-selection
+incisor <- subset(incisor, subset = nFeature_RNA > quantile5_incisor & percent.mt < 15 & nCount_RNA < 1000000)
 ```
 
-#Normalization of the data
+#Normalization
+#We normalize the gene expression measurements for each cell by the total expression
 ```{r normalization, echo=T}
 incisor <-NormalizeData(incisor, normalization.method = "LogNormalize", scale.factor = 10000)
 ```
@@ -110,10 +109,10 @@ incisor <-FindVariableFeatures(incisor, selection.method = "vst", nfeatures = 20
 top10 <- head(VariableFeatures(incisor), 10)
 ```
 
-#Identification of the variable genes between cells
+#Plot the variable genes
 ```{r plot_variable_genes echo=T}
 plot1 <- VariableFeaturePlot(incisor)
-plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE) #Evidence the names of the 10 most variable genes
 plot2
 ```
 
@@ -123,12 +122,12 @@ all.genes <- rownames(incisor)
 incisor <- ScaleData(incisor, features = all.genes)
 ```
 
-#Linear dimensional reduction
+#Dimensional reduction
 ```{r dimensional_reduction echo=T}
 #Run PCA
 incisor <- RunPCA(incisor, features = VariableFeatures(object = incisor))
-# Examine and visualize PCA results a few different ways
-print(incisor[["pca"]], dims = 1:5, nfeatures = 5) # 5 genes that explain the most the variability through 5 axes
+#Examine and visualize PCA results
+print(incisor[["pca"]], dims = 1:5, nfeatures = 5) #Give 5 genes that explain the most the variability through 5 dimensions
 VizDimLoadings(incisor, dims = 1:2, reduction = "pca")
 DimPlot(incisor, reduction = "pca")
 DimHeatmap(incisor, dims = 1, cells = 500, balanced = TRUE)
@@ -140,6 +139,7 @@ DimHeatmap(incisor, dims = 1:15, cells = 500, balanced = TRUE)
 incisor <- JackStraw(incisor, num.replicate = 100)
 incisor <- ScoreJackStraw(incisor, dims = 1:20)
 JackStrawPlot(incisor, dims = 1:20)
+ElbowPlot(incisor) #Gives the variability explained according to the number of dimensions taken
 ```
 
 #Cluster the cells
@@ -155,3 +155,24 @@ head(Idents(incisor), 5)
 incisor <-RunUMAP(incisor, dims=1:10)
 DimPlot(incisor, reduction = "umap")
 saveRDS(incisor, "cluster.rds")
+
+d=DimPlot(incisor, reduction = "umap")
+d
+ggsave(file="umap.png",d)
+
+#Find the markers for clusters
+  #find all markers of cluster 1
+cluster1.markers <- FindMarkers(incisor, ident.1 = 1, min.pct = 0.25)
+head(cluster1.markers, n = 5)
+  #find all markers distinguishing cluster 5 from clusters 0 and 3
+cluster5.markers <- FindMarkers(incisor, ident.1 = 5, ident.2 = c(0, 3), min.pct = 0.25)
+head(cluster5.markers, n = 5)
+  #find markers for every cluster compared to all remaining cells, report only the positive ones
+incisor.markers <- FindAllMarkers(incisor, only.pos = TRUE, min.pct = 0.25, logfc.threshold = 0.25)
+incisor.markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_log2FC)
+  #Test Rock 
+cluster1.markers <- FindMarkers(incisor, ident.1 = 0, log2FC.threshold = 0.25, test.use = "roc", only.pos = TRUE)
+  #Display the violin plot for the given genes 
+VlnPlot(incisor, features = c("MS4A1", "CD79A"))
+  #Display the violin plot of raw counts for the given genes
+VlnPlot(incisor, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
