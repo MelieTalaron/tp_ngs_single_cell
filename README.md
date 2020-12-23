@@ -120,7 +120,7 @@ To cluster the cell with the neighbooring method, run the chunk **"cluster"**. T
 ### 9.	Identify the population of cells in the clusters
 The markers of each cluster can be found with the chunk **"markers"**. This will find either all the markers for a specified cluster (line 166), either the markers that distinguish a cluster from another (line 169), either more specifically the markers for every cluster compared to all remaining cells . Violin plots for specified genes can additionally be obtained as well as violin plots for the raw counts.
 
-> ![](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/img/Annotation_clusters.png)   
+> ![](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/img/Annotation_clusters.png)  
 *The genes that characterized our clusters were not specific enough to identify known populations of cells. Using supplementary data from the HIS and immunostaining experimentations, we better assessed which genes were expressed in the cells and we came to a first proposition of cluster annotation proposed below.   
 In this annotation, we evidence a high heterogeneity of cells that was not found in other type of tooth such as the molar (cf. [reference](https://www.nature.com/articles/s41467-020-18512-7#citeas)). Cells from apical pulp exhibit a continuum of expression profile with cells from dental follicule, ondoblast and distal pulp. They also express genes associated with cellular regeneration (Sfrp2, Lef1, Fzd1, Sfrp1, Rspo1, Trabd2b, Gli1, and Wif1), especially at the apical part, thus we proposed that these cells are responsible for the continuous growth of the incisors.*
 
