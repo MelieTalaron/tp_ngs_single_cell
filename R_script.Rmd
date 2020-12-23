@@ -129,7 +129,7 @@ incisor <- ScaleData(incisor, features = all.genes)
 incisor <- RunPCA(incisor, features = VariableFeatures(object = incisor))
 #Examine and visualize PCA results
 print(incisor[["pca"]], dims = 1:5, nfeatures = 5) #Give 5 genes that explain the most the variability through 5 dimensions
-VizDimLoadings(incisor, dims = 1:2, reduction = "pca")
+VizDimLoadings(incisor, dims = 1:2, reduction = "pca") #Visualize top genes of each dimension
 DimPlot(incisor, reduction = "pca")
 DimHeatmap(incisor, dims = 1, cells = 500, balanced = TRUE)
 DimHeatmap(incisor, dims = 1:15, cells = 500, balanced = TRUE)
@@ -154,14 +154,14 @@ head(Idents(incisor), 5)
 #Run the UMAP
 ```{r umap echo=T}
 incisor <-RunUMAP(incisor, dims=1:10)
-DimPlot(incisor, reduction = "umap")
-saveRDS(incisor, "cluster.rds")
-
 d=DimPlot(incisor, reduction = "umap")
 d
+saveRDS(incisor, "cluster.rds")
 ggsave(file="umap.png",d)
+```
 
 #Find the markers for clusters
+```{r markers echo=T}
   #find all markers of cluster 1
 cluster1.markers <- FindMarkers(incisor, ident.1 = 1, min.pct = 0.25)
 head(cluster1.markers, n = 5)
@@ -177,3 +177,4 @@ cluster1.markers <- FindMarkers(incisor, ident.1 = 0, log2FC.threshold = 0.25, t
 VlnPlot(incisor, features = c("MS4A1", "CD79A"))
   #Display the violin plot of raw counts for the given genes
 VlnPlot(incisor, features = c("NKG7", "PF4"), slot = "counts", log = TRUE)
+```
