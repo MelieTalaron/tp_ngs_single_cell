@@ -115,7 +115,8 @@ The UMAP can be obtained by running the **"umap"** chunk. This will plot the UMA
 ### 8. Cluster the cells
 To cluster the cell with the neighbooring method, run the chunk **"cluster"**. This will also display the cluster ID of the first cells (here, 5).
 
-> *We clustered our cells based on 5 cells but ideally we would have taken at least 100 cells to significantly cluster our cells. Different groups of cells were still distinguishable.*
+> ![](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/img/Annotation_clusters.png)   
+*We clustered our cells based on 5 cells but ideally we would have taken at least 100 cells to significantly cluster our cells. Different groups of cells were still distinguishable.*
 
 ### 9.	Identify the population of cells in the clusters
 The markers of each cluster can be found with the chunk **"markers"**. This will find either all the markers for a specified cluster (line 166), either the markers that distinguish a cluster from another (line 169), either more specifically the markers for every cluster compared to all remaining cells . Violin plots for specified genes can additionally be obtained as well as violin plots for the raw counts.
