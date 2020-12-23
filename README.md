@@ -43,7 +43,9 @@ To appreciate the quality of the downloaded sequences, run [fastq-c_sorting.sh](
 This will create a subfolder **"fastqc_sorting"** in **"data"** (if not pre-existing), and generate a FAST-qc report and *.zip* for each run of the raw sequence data located in **"sra_data"**.   
    /!\ The current script performs only on the 10 first srr
 
->*The quality evaluation was performed with ``fastqc`` v.0.11.8 on a sample of 10 first SRR*
+>*The quality evaluation was performed with ``fastqc`` v.0.11.8 on a sample of 10 first SRR    
+Here an example of quality score result, we see a decreasing of quality at the ending bases, suggesting a need to clean the data.*
+![](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/img/QC_before_cleaning.png)
 
 ## Step 2. Clean the data
 
@@ -51,7 +53,9 @@ To clean the sequences of the downloaded sequences data, run [trimmo_clear.sh](h
 This will create a subfolder **"trimmo_cleared"** in **"data"** (if not pre-existing), and generate a *.zip* file in **"trimmo_cleared"**, for each run of the downloaded data, applying a basic cleaning of trimmomatic command for single-end srr.
 
 >*The data sample was reduced to 2553 after cleanance with Trimmomatic v.0.39   
-A second quality assessment was performed on the 10 first clean SRR to provide further verification*
+A second quality assessment was performed on the 10 first clean SRR to provide further verification   
+Here the example of the previous srr cleant with trimmomatic: we see an improvement of last-bases quality.
+![](https://github.com/MelieTalaron/tp_ngs_single_cell/blob/master/img/QC_after_cleaning.png)   
 
 ## Step 3. Alignment and quantification of the sequences
 
